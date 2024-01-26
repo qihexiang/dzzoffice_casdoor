@@ -1,0 +1,5 @@
+{
+    "require": {
+        "casdoor/casdoor-php-sdk": "^1.2"
+    }
+}
