@@ -1,5 +1,30 @@
 ﻿# dzzoffice
 
+## Casdoor登录支持
+
+### HTTPS CA证书支持
+
+确认系统中安装了ca-certificates包，并将CA证书复制到/usr/local/share/ca-cerificates/目录下，然后运行`update-ca-certificates`命令完成更新。
+
+### Casdoor 公钥证书
+
+将公钥证书放置于某个路径下，通过`config/config.php`中`$_config["sso"]["ceritificate"]`项进行读取；理论上可以直接复制到配置文件中，但格式上容易出现问题。
+
+### 示例配置
+
+```php
+# config.php
+$_config['sso'] = array(
+    'redirect' => "http://office.tcub.site:8201" . "/user.php?mod=casdoor_login",
+    'endpoint' => "https://door.tcub.site:8443",
+    'client_id' => "c8fc02c8c1806bfe7921",
+    'secret' => "2651a9a6013cb02ad85f23210b02d09d199f20d0",
+    'certificate' => file_get_contents(__DIR__ . "/../app_cert.pem"),
+    'app_name' => "app-built-in",
+    'org_name' => "built-in",
+);
+```
+
 ### 官方网站:http://dzzoffice.com
 ### 演示地址:http://demo.dzzoffice.com
 

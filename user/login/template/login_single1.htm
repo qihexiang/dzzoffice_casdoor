@@ -46,6 +46,7 @@
 			<div class="form-group">
 				<input type="text" class="form-control" id="password3_$loginhash" placeholder="{lang user_login_password}" name="password" onfocus="this.type='password'" autocomplete="off">
 			</div>
+			<a href="$_config['sso']['endpoint']/login/oauth/authorize?client_id=$_config['sso']['client_id']&response_type=code&redirect_uri=$_config['sso']['redirect']&state=casdoor&scope=read">SSO Login</a>
 			<!--{/if}-->
 			
 
