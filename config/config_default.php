@@ -1,6 +1,16 @@
 <?php
 $_config = array();
 
+$_config['sso'] = array(
+    'redirect' => getenv("DZZ_HOST") . "/user.php?mod=casdoor_login",
+    'endpoint' => getenv("CASDOOR_HOST"),
+    'client_id' => getenv("CAS_CLIENT_ID"),
+    'secret' => getenv("CAS_CLIENT_SECRET"),
+    'certificate' => getenv("CAS_CERTIFICATE"),
+    'app_name' => getenv("CAS_APP_NAME"),
+    'org_name' => getenv("CAS_ORG_NAME")
+);
+
 // ----------------------------  CONFIG DB  ----------------------------- //
 // ----------------------------  数据库相关设置---------------------------- //
 
