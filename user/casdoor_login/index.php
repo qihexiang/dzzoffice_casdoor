@@ -29,17 +29,26 @@ $result = $jwt->parseJwtToken($accessToken, User::$authConfig);
 $uid = C::t('user')->fetch_uid_by_username($result["name"]);
 $user = C::t('user')->get_user_by_uid($uid);
 // print_r($user);
-if (!empty($user)) {
-    // Login
-    if ($_G['member']['lastip'] && $_G['member']['lastvisit']) {
-		dsetcookie('lip', $_G['member']['lastip'] . ',' . $_G['member']['lastvisit']);
-	}
-    C::t('user_status') -> update($_G['uid'], array('lastip' => $_G['clientip'], 'lastvisit' => TIMESTAMP, 'lastactivity' => TIMESTAMP));
-    setloginstatus($user, 259200);
-    // $loginmessage = $_G['groupid'] == 8 ? 'login_succeed_inactive_member' : 'login_succeed';
-	// $location = $_G['groupid'] == 8 ? 'index.php?open=password' : dreferer();
-    showmessage("登录成功", "/", $user, $extra);
-} else {
+if (empty($user)) {
     // Auto registry
-
+    @session_unset();
+	$groupinfo = array();
+	$addorg = 0;
+	if ($_G['setting']['regverify']) {
+		$groupinfo['groupid'] = 8;
+	} else {
+		$groupinfo['groupid'] = $_G['setting']['newusergroupid'];
+		$addorg = 1;
+	}
+	$password = random(20);
+	$user = uc_user_register($result["name"], $password, $result["email"], '', 0, '', $_G['clientip'], $addorg);
+    print($user);
 }
+if ($_G['member']['lastip'] && $_G['member']['lastvisit']) {
+    dsetcookie('lip', $_G['member']['lastip'] . ',' . $_G['member']['lastvisit']);
+}
+C::t('user_status') -> update($_G['uid'], array('lastip' => $_G['clientip'], 'lastvisit' => TIMESTAMP, 'lastactivity' => TIMESTAMP));
+setloginstatus($user, 259200);
+// $loginmessage = $_G['groupid'] == 8 ? 'login_succeed_inactive_member' : 'login_succeed';
+// $location = $_G['groupid'] == 8 ? 'index.php?open=password' : dreferer();
+showmessage("登录成功", "/", $user, $extra);
