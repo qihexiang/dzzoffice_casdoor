@@ -14,3 +14,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 && php composer-setup.php \
 && php -r "unlink('composer-setup.php');" \
 && php composer.phar require casdoor/casdoor-php-sdk
+
+VOLUME ["/usr/local/share/ca-certificates/"]
+
+ENTRYPOINT ["/var/www/html/entrypoint.sh"]
