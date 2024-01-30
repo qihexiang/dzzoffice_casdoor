@@ -4,26 +4,15 @@
 
 ### HTTPS CA证书支持
 
-确认系统中安装了ca-certificates包，并将CA证书复制到/usr/local/share/ca-cerificates/目录下，然后运行`update-ca-certificates`命令完成更新。
+将CA证书复制到/etc/ssl/certs目录下，以`.crt`作为文件名后缀，然后通过`update-ca-certificates`完成添加；使用docker时，将证书挂载到该目录后，`entrypoint.sh`会在每次启动时运行证书更新的指令，可参考`docker-compose.yml`
 
-### Casdoor 公钥证书
+### 环境变量配置
 
-将公钥证书放置于某个路径下，通过`config/config.php`中`$_config["sso"]["ceritificate"]`项进行读取；理论上可以直接复制到配置文件中，但格式上容易出现问题。
+参考`.env.example`，注意，环境变量中的配置会在第一次启动时同步到`config/config.php`中，后续不再从环境变量中读取。
 
-### 示例配置
+### 用户管理
 
-```php
-# config.php
-$_config['sso'] = array(
-    'redirect' => "http://office.tcub.site:8201" . "/user.php?mod=casdoor_login",
-    'endpoint' => "https://door.tcub.site:8443",
-    'client_id' => "c8fc02c8c1806bfe7921",
-    'secret' => "2651a9a6013cb02ad85f23210b02d09d199f20d0",
-    'certificate' => file_get_contents(__DIR__ . "/../app_cert.pem"),
-    'app_name' => "app-built-in",
-    'org_name' => "built-in",
-);
-```
+Casdoor只负责了用户身份验证的步骤，后续的用户组等管理仍然是在DZZoffice中部署的。有SSO登录自动注册的用户会同步Casdoor的用户名和邮箱地址，并使用20位的随机密码注册到DZZOffice中。
 
 ### 官方网站:http://dzzoffice.com
 ### 演示地址:http://demo.dzzoffice.com

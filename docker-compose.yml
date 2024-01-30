@@ -5,6 +5,10 @@ services:
     build: .
     ports:
     - 8201:80
+    env_file:
+    - ./.env
+    volumes:
+    - ../certs/tcub.site_ecc/ca.cer:/usr/local/share/ca-certificates/letsencrypt.crt
   db:
     image: mysql:latest
     environment:
