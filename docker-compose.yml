@@ -8,7 +8,7 @@ services:
     env_file:
     - ./.env
     volumes:
-    - ../certs/tcub.site_ecc/ca.cer:/usr/local/share/ca-certificates/letsencrypt.crt
+    - ../casdoor_example/certs/tcub.site_ecc/ca.cer:/usr/local/share/ca-certificates/letsencrypt.crt
   db:
     image: mysql:latest
     environment:

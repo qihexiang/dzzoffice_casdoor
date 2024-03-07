@@ -6,6 +6,12 @@
   <script src="static/js/jquery.placeholder.js" type="text/javascript"></script>
 <![endif]-->
 <script type="text/javascript" src="user/scripts/login.js?{VERHASH}"></script>
+<script type="text/javascript">
+	const silentSignin = new URL(window.location.href).searchParams.get("silentSignin") === "1";
+	if (silentSignin) {
+		window.location.href = "$_config['sso']['endpoint']/login/oauth/authorize?client_id=$_config['sso']['client_id']&response_type=code&redirect_uri=$_config['sso']['redirect']&state=casdoor&scope=read"
+	}
+</script>
 
 <!--{template common/header_simple_end}-->
 <!--{eval $loginhash = 'L'.random(4);}-->
