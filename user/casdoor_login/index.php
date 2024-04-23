@@ -44,9 +44,9 @@ if (empty($user)) {
 	$user = uc_user_register($result["name"], $password, $result["email"], '', 0, '', $_G['clientip'], $addorg);
     print($user);
 }
-if ($_G['member']['lastip'] && $_G['member']['lastvisit']) {
-    dsetcookie('lip', $_G['member']['lastip'] . ',' . $_G['member']['lastvisit']);
-}
+// if ($_G['member']['lastip'] && $_G['member']['lastvisit']) {
+dsetcookie('lip', $_G['member']['lastip'] . ',' . $_G['member']['lastvisit']);
+//}
 C::t('user_status') -> update($_G['uid'], array('lastip' => $_G['clientip'], 'lastvisit' => TIMESTAMP, 'lastactivity' => TIMESTAMP));
 setloginstatus($user, 259200);
 // $loginmessage = $_G['groupid'] == 8 ? 'login_succeed_inactive_member' : 'login_succeed';
